@@ -6,9 +6,9 @@ public class Bodypart : MonoBehaviour {
 	[Header("Battle Stats")]
 	public int slotNumber; // 0 = head, 1 = arms, 2 = misc, 3 = legs
 	public float cooldown;
-	public float damage; // base damage from this attack only
-	public float atkMultiplier; // atk bonus for all attacks
-	public float defMultiplier; // def bonus from all attacks
+	public float damage = 1; // base damage from this attack only
+	public float atkMultiplier = 1; // atk bonus for all attacks
+	public float defMultiplier = 1; // def bonus from all attacks
 	
 	[Header("Physic Stats")]
 	public float speedIncrease;
@@ -32,8 +32,8 @@ public class Bodypart : MonoBehaviour {
 
 	public virtual void OnJustObtained()
 	{
-		playerGraphics.sprite = sprite;
-		playerAnimator.runtimeAnimatorController = animatorController;
+		if(sprite) playerGraphics.sprite = sprite;
+		if(animatorController) playerAnimator.runtimeAnimatorController = animatorController;
 
 		playerBattleStats.atkMultiplier *= atkMultiplier;
 		playerBattleStats.defMultiplier *= defMultiplier;

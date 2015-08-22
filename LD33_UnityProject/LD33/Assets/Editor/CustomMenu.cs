@@ -9,5 +9,6 @@ public class CustomMenu : Editor {
 	{
 		// donner TextBoxPool à BodyPartIcon
 		// donner les quatre BodyPartButton à BodyPartIcon
+		// donner tous les morceaux du joueur à BodyPart
 	}
 }

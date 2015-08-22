@@ -13,6 +13,7 @@ public class BodypartButton : MonoBehaviour {
 	// References
 	public BodypartIcon currentIcon;
 	public Transform self;
+	public Image selfImage;
 
 	public void Start()
 	{
