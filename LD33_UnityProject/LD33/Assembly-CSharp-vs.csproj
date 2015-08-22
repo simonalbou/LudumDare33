@@ -53,7 +53,7 @@
      <Compile Include="Assets\Physics\Scripts\CharacterController2D.cs" />
      <Compile Include="Assets\Physics\Scripts\PlatformingInputHandler.cs" />
      <Compile Include="Assets\Physics\Scripts\Raycaster.cs" />
-     <Compile Include="Assets\UI\Scripts\VirtualJoystick.cs" />
+     <Compile Include="Assets\UI\Joystick\VirtualJoystick.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
