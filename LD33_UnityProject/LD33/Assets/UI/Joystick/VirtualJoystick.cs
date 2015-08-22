@@ -69,9 +69,10 @@ public class VirtualJoystick : MonoBehaviour
                         Vector2 test2 = basePosition - test;
                         newPosition = -test2.normalized * 0.8f + basePosition;
                     }
-                    trsfrm.position = newPosition;
 
                     //Déplacement
+                    trsfrm.position = newPosition;
+
                 }
             }
         }
@@ -104,7 +105,6 @@ public class VirtualJoystick : MonoBehaviour
             }
             trsfrm.position = newPosition;
         }*/
-        Debug.Log(((newPosition.x - basePosition.x) / 0.8f));
 	}
 
     public float GetX()
