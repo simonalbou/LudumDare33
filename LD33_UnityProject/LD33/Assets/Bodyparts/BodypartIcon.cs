@@ -33,7 +33,7 @@ public class BodypartIcon : MonoBehaviour {
 		if (isPlacedInSlot) return;
 
 		// vérifier la distance avec bodyPartButtons[bodyPart.slotNumber].self.position
-		bool closeToSlot = false;
+        bool closeToSlot = Vector2.Distance(self.position, bodyPartButtons[bodyPart.slotNumber].self.position) < 0.5f;
 
 		if (closeToSlot) OnPlacedInSlot();
 		else self.position = initPosition;
