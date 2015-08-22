@@ -11,11 +11,13 @@ public class BodypartButton : MonoBehaviour {
 	private float currentCooldown;
 
 	// References
-	public Bodypart currentBodypart;
+	public BodypartIcon currentIcon;
+	public Transform self;
 
 	public void Start()
 	{
-		currentBodypart.OnJustObtained();
+		currentIcon.isPlacedInSlot = true;
+		currentIcon.bodyPart.OnJustObtained();
 	}
 
 	public void Update()
@@ -23,7 +25,7 @@ public class BodypartButton : MonoBehaviour {
 		if (currentCooldown > 0)
 		{
 			currentCooldown -= Time.deltaTime;
-			grayFilter.fillAmount = Mathf.Clamp01(currentCooldown / currentBodypart.cooldown);
+			grayFilter.fillAmount = Mathf.Clamp01(currentCooldown / currentIcon.bodyPart.cooldown);
 		}
 
 		if (currentCooldown < 0)
@@ -36,8 +38,8 @@ public class BodypartButton : MonoBehaviour {
 	public void UseBodyPart()
 	{
 		if (currentCooldown > 0) return;
-		if (currentBodypart.cooldown > 0) currentCooldown = currentBodypart.cooldown;
+		if (currentIcon.bodyPart.cooldown > 0) currentCooldown = currentIcon.bodyPart.cooldown;
 
-		currentBodypart.OnUsingBodypart();
+		currentIcon.bodyPart.OnUsingBodypart();
 	}
 }

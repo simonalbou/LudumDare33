@@ -49,11 +49,14 @@
      <Compile Include="Assets\Bodyparts\AttackableObject.cs" />
      <Compile Include="Assets\Bodyparts\Bodypart.cs" />
      <Compile Include="Assets\Bodyparts\BodypartButton.cs" />
+     <Compile Include="Assets\Bodyparts\BodypartIcon.cs" />
      <Compile Include="Assets\GlobalData\KeyBinding.cs" />
      <Compile Include="Assets\Physics\Scripts\CharacterController2D.cs" />
      <Compile Include="Assets\Physics\Scripts\PlatformingInputHandler.cs" />
      <Compile Include="Assets\Physics\Scripts\Raycaster.cs" />
      <Compile Include="Assets\UI\Joystick\VirtualJoystick.cs" />
+     <Compile Include="Assets\UI\TextBoxes\TextBox.cs" />
+     <Compile Include="Assets\UI\TextBoxes\TextBoxPool.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

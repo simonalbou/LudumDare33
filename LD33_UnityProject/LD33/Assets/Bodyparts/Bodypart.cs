@@ -27,7 +27,7 @@ public class Bodypart : MonoBehaviour {
 	[Header("Graphics")]
 	public Sprite sprite;
 	public RuntimeAnimatorController animatorController;
-
+	public string bodypartName, flavorText;
 
 
 	public virtual void OnJustObtained()
