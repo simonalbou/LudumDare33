@@ -98,7 +98,7 @@ public class PlatformingInputHandler : MonoBehaviour
 	
 	void Update()
 	{
-		//if (!Input.GetKey(KeyCode.D)) Debug.Log(horizontalAxis);
+		//if (!Input.GetKey(KeyCode.D)) Debug.Log(Input.GetAxis("Horizontal"));
 
 		UpdateInput();
 
