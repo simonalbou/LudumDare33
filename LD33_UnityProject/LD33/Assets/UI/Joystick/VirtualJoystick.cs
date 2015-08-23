@@ -41,9 +41,9 @@ public class VirtualJoystick : MonoBehaviour
             {
                 if (tch.phase == TouchPhase.Began)
                 {
-                    if (tch.position.x < 640)
+                    if (Camera.main.ScreenToWorldPoint(tch.position).x < 0.5f)
                     {
-                        basePosition = tch.position;
+                        basePosition = Camera.main.ScreenToWorldPoint(tch.position);
                         trsfrm.position = basePosition;
                         spr.enabled = true;
 
@@ -59,15 +59,15 @@ public class VirtualJoystick : MonoBehaviour
                 }
                 if (tch.phase == TouchPhase.Moved || tch.phase == TouchPhase.Stationary)
                 {
-                    if (Vector2.Distance(tch.position, basePosition) < 80f)
+                    if (Vector2.Distance(Camera.main.ScreenToWorldPoint(tch.position), basePosition) < 0.8f)
                     {
-                        newPosition = tch.position;
+                        newPosition = Camera.main.ScreenToWorldPoint(tch.position);
                     }
                     else
                     {
-                        Vector2 test = tch.position;
+                        Vector2 test = Camera.main.ScreenToWorldPoint(tch.position);
                         Vector2 test2 = basePosition - test;
-                        newPosition = -test2.normalized * 80f + basePosition;
+                        newPosition = -test2.normalized * 0.8f + basePosition;
                     }
 
                     //Déplacement
@@ -76,39 +76,48 @@ public class VirtualJoystick : MonoBehaviour
                 }
             }
         }
-            
+
         /*
          * Gestion à la souris
-         * 
-        if (Input.GetMouseButtonDown(0))
+         */
+        /*if (Input.GetMouseButtonDown(0))
         {
-            basePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            trsfrm.position = basePosition;
-            spr.enabled = true;
+            if (Camera.main.ScreenToWorldPoint(Input.mousePosition).x < 0.5f)
+                    {
+                        basePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                        trsfrm.position = basePosition;
+                        spr.enabled = true;
+
+                        transformCercle.position = basePosition;
+                        sprCercle.enabled = true;
+                    }
         }
         if(Input.GetMouseButtonUp(0))
         {
             spr.enabled = false;
             newPosition = basePosition;
+            sprCercle.enabled = false;
         }
         if (Input.GetMouseButton(0))
         {
-            if (Vector2.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), basePosition) < 1f)
+            if (Vector2.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), basePosition) < 0.8f)
             {
-                newPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                newPosition = Input.mousePosition;
             }
             else
             {
                 Vector2 test = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 test2 = basePosition - test;
-                newPosition = -test2.normalized*1.5f + basePosition;
+                newPosition = -test2.normalized * 0.8f + basePosition;
             }
+
+            //Déplacement
             trsfrm.position = newPosition;
         }*/
 	}
 
     public float GetX()
     {
-        return (((newPosition.x - basePosition.x) / 80f));
+        return (((newPosition.x - basePosition.x) / 0.8f));
     }
 }
