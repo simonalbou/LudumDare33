@@ -10,7 +10,7 @@ public class MainCameraBehaviour : MonoBehaviour {
 	// helper vars
 	private float abs, lastFrameAbs, sign, lastFrameSign;
 
-	private bool playerDidntMove, mustFollowPlayer;
+	public bool playerDidntMove, mustFollowPlayer;
 
 	void Update ()
 	{
