@@ -1,8 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
+
+public class HarmEvent : UnityEvent<float> { }
 
 public class AttackableObject : MonoBehaviour {
 
+	[Header("Misc battle stats")]
 	public float maxHealth = 100;
 	private float curHealth;
 	public float atkMultiplier = 1;
@@ -10,14 +14,42 @@ public class AttackableObject : MonoBehaviour {
 
 	public Transform lifeBar;
 
+	// Who can shoot at this ?
+	[Header("Collision Things")]
+	public bool takesEnemyBullets = true;
+	public bool takesAllyBullets = false;
+
+	// Does this object block bullets or it is see-through ?
+	public bool destroyBullet;
+
+	public HarmEvent OnHitByBullet;
+
+	// Invincibility things
+	[HideInInspector]
+	public bool isInvincible;
+	private float invincibilityDuration, invincibilityTimeStamp;
+
+	void Awake()
+	{
+		OnHitByBullet = new HarmEvent();
+	}
+
 	void Start()
 	{
+		OnHitByBullet.AddListener(Hurt);
 		curHealth = maxHealth;
+	}
+
+	void Update()
+	{
+		if (isInvincible && Time.time > invincibilityTimeStamp + invincibilityDuration)
+			isInvincible = false;
 	}
 
 	public void Hurt(float dmg)
 	{
-		curHealth -= dmg;
+		float trueDmg = dmg / defMultiplier;
+		curHealth -= trueDmg;
 		if (curHealth < 0) curHealth = 0;
 
 		lifeBar.localScale = new Vector3(curHealth / maxHealth, lifeBar.localScale.y, lifeBar.localScale.z);
@@ -28,5 +60,43 @@ public class AttackableObject : MonoBehaviour {
 	public void Die()
 	{
 
+	}
+
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		// Don't even check tags if we just can't get shot.
+		if (isInvincible) return;
+
+		// We only take bullets or ally bullets, or an enemy's body.
+		if (other.tag != "Attack" && other.tag != "AllyAttack" && other.tag != "Enemy") return;
+
+		// From those two, sort out the right kind of bullets
+		if (other.tag == "Attack" && !takesEnemyBullets) return;
+		if (other.tag == "AllyAttack" && !takesAllyBullets) return;
+		if (other.tag == "Enemy" && !takesEnemyBullets) return;
+
+		if (other.tag != "Enemy")
+		{
+			Bullet bullet = other.GetComponent<Bullet>();
+			if (!bullet.enabled) return;
+
+			if (destroyBullet && !bullet.dontDestroyWhenCollided) bullet.Die();
+			if (bullet.dontDestroyWhenCollided) MakeInvincible(0.5f);
+			if (OnHitByBullet != null) OnHitByBullet.Invoke(bullet.power);
+		}
+		else
+		{
+			ComportementEnnemis enemyScript = other.GetComponent<ComportementEnnemis>();
+			if (OnHitByBullet != null) OnHitByBullet.Invoke(enemyScript.collisionDamage);
+			MakeInvincible(0.5f);
+		}
+	}
+
+	// Example : when hurt by an enemy's body, it would be unfair if the player could get hurt every frame.
+	public void MakeInvincible(float duration)
+	{
+		isInvincible = true;
+		invincibilityDuration = duration;
+		invincibilityTimeStamp = Time.time;
 	}
 }

@@ -21,11 +21,12 @@ public class ComportementEnnemis : MonoBehaviour
 	public bool chargesPlayer;
 	public float speedWhileAttacking;
 	public bool usesSpecialAttack;
-	//public AttackPattern attackPattern;
+	public AttackPattern attackPattern;
 
 	[Header("Basic Stats")]
 	private bool attacking;
     public float baseSpeed;
+	public float collisionDamage = 10;
     private bool droite;
 
 	[Header("References")]
@@ -48,11 +49,13 @@ public class ComportementEnnemis : MonoBehaviour
         if(Vector2.Distance(player.position, self.position) < distanceAggro)
 		{
 			attacking = true;
+			if (usesSpecialAttack) attackPattern.enabled = true;
 			groupOfPathPoints.parent = self;
 		}
 		else
 		{
 			attacking = false;
+			if (usesSpecialAttack) attackPattern.enabled = false;
 			groupOfPathPoints.parent = null;
 		}
 

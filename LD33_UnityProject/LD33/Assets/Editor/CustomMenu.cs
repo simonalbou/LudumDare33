@@ -16,6 +16,7 @@ public class CustomMenu : Editor {
 
 		GameObject player = GameObject.FindGameObjectWithTag("Player");
 		GameObject playerGraphics = GameObject.FindGameObjectWithTag("PlayerGraphics");
+		GameObject playerHitbox = GameObject.FindGameObjectWithTag("PlayerHitbox");
 		TouchManager touchManager = GameObject.FindGameObjectWithTag("TouchManager").GetComponent<TouchManager>();
 
 		TextBoxPool tbp = null;
@@ -65,7 +66,7 @@ public class CustomMenu : Editor {
 			{
 				Bodypart bp = go.GetComponent<Bodypart>();
 				bp.playerScript = player.GetComponent<PlatformingInputHandler>();
-				bp.playerBattleStats = player.GetComponent<AttackableObject>();
+				bp.playerBattleStats = playerHitbox.GetComponent<AttackableObject>();
 				string tagToCheck = "";
 				switch (bp.slotNumber)
 				{
@@ -94,6 +95,15 @@ public class CustomMenu : Editor {
 				ComportementEnnemis ce = go.GetComponent<ComportementEnnemis>();
 				ce.player = player.transform;
 				EditorUtility.SetDirty(ce);
+			}
+
+			if(go.GetComponent<Bullet>())
+			{
+				Bullet bullet = go.GetComponent<Bullet>();
+				bullet.VFXPool = GameObject.FindGameObjectWithTag("ParticlePool").GetComponent<ParticlePool>();
+				bullet.LLScreenCorner = GameObject.FindGameObjectWithTag("BottomLeftOfCamera").transform;
+				bullet.URScreenCorner = GameObject.FindGameObjectWithTag("TopRightOfCamera").transform;
+				EditorUtility.SetDirty(bullet);
 			}
 		}
 
