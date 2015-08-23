@@ -13,6 +13,7 @@ public class AttackableObject : MonoBehaviour {
 	public float defMultiplier = 1;
 
 	public Transform lifeBar;
+	public SpriteRenderer lifeBarSprite;
 
 	// Who can shoot at this ?
 	[Header("Collision Things")]
@@ -52,7 +53,9 @@ public class AttackableObject : MonoBehaviour {
 		curHealth -= trueDmg;
 		if (curHealth < 0) curHealth = 0;
 
-		lifeBar.localScale = new Vector3(curHealth / maxHealth, lifeBar.localScale.y, lifeBar.localScale.z);
+		float lifeRatio = curHealth / maxHealth;
+		lifeBar.localScale = new Vector3(lifeRatio, lifeBar.localScale.y, lifeBar.localScale.z);
+		lifeBarSprite.color = new Color(1 - lifeRatio*lifeRatio, lifeRatio, 0);
 
 		if (curHealth == 0) Die();
 	}
