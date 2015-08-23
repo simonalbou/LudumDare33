@@ -23,6 +23,11 @@ public class BodypartIcon : MonoBehaviour {
 	public Camera mainCam;
 	private int indexInManager;
 
+	public void Awake()
+	{
+		selfImage.sprite = bodyPart.icon;
+	}
+
 	public void Start()
 	{
 		for(int i=0; i<touchManager.allIcons.Length; i++)
@@ -72,7 +77,7 @@ public class BodypartIcon : MonoBehaviour {
 				self.position = new Vector3(worldTouch.x, worldTouch.y, self.position.z);
 				//self.Translate(tch.deltaPosition/100);
 				//Debug.Log(tch.deltaPosition / 100);
-				if(tch.deltaPosition.sqrMagnitude > 0.3f) moveTimestamp = Time.time;
+				if(tch.deltaPosition.sqrMagnitude > 1f) moveTimestamp = Time.time;
 			}
 
 			if (tch.phase == TouchPhase.Stationary)

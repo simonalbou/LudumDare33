@@ -89,6 +89,13 @@ public class CustomMenu : Editor {
 				bp.playerAnimator = graphics.GetComponent<Animator>();
 				EditorUtility.SetDirty(bp);
 			}
+
+			if(go.GetComponent<ComportementEnnemis>())
+			{
+				ComportementEnnemis ce = go.GetComponent<ComportementEnnemis>();
+				ce.player = player.transform;
+				EditorUtility.SetDirty(ce);
+			}
 		}
 
 		touchManager.allIcons = allIconsAsList.ToArray();
