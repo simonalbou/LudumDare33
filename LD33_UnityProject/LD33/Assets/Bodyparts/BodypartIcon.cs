@@ -68,10 +68,11 @@ public class BodypartIcon : MonoBehaviour {
 			if (tch.phase == TouchPhase.Moved)
 			{
 				OnReleasedOrMoved();
-				//Vector3 worldTouch = mainCam.ScreenToWorldPoint(tch.position);
-				//self.position = new Vector3(worldTouch.x, worldTouch.y, self.position.z);
-				self.Translate(tch.deltaPosition);
-				if(tch.deltaPosition.sqrMagnitude > 0.07f) moveTimestamp = Time.time;
+				Vector3 worldTouch = mainCam.ScreenToWorldPoint(tch.position);
+				self.position = new Vector3(worldTouch.x, worldTouch.y, self.position.z);
+				//self.Translate(tch.deltaPosition/100);
+				//Debug.Log(tch.deltaPosition / 100);
+				if(tch.deltaPosition.sqrMagnitude > 0.3f) moveTimestamp = Time.time;
 			}
 
 			if (tch.phase == TouchPhase.Stationary)

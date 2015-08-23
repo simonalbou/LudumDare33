@@ -41,7 +41,6 @@ public class BodypartButton : MonoBehaviour {
 
 		if(buttonDown && currentTextBox == null && Time.time - clickTimestamp > 0.7f)
 		{
-			Debug.Log("text spawns");
 			currentTextBox = textBoxPool.Spawn(self.position, currentIcon.bodyPart.bodypartName, currentIcon.bodyPart.flavorText);
 		}
 	}
