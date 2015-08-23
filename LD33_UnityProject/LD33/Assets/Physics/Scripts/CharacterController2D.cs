@@ -46,7 +46,7 @@ public class CharacterController2D : MonoBehaviour
 	private float skinWidth;
 
 	// If we land on something that moves, we must be able to move along : (unless stated otherwise by setting canBeCarried to false)
-	public bool canBeCarried;
+	public bool canBeCarried, canCarry;
 	[HideInInspector]
 	public CharacterController2D parent;
 	[HideInInspector]
@@ -194,11 +194,12 @@ public class CharacterController2D : MonoBehaviour
 		CharacterController2D possibleGround = FindGround();
 
 		if (possibleGround == parent) return;
-
+		
 		StopFollowing();
 
 		if (possibleGround != null)
 		{
+			if (!possibleGround.canCarry) return;
 			parent = possibleGround;
 			possibleGround.children.Add(this);
 		}
