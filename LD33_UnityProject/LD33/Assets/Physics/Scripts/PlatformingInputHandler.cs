@@ -19,6 +19,7 @@ public class PlatformingInputHandler : MonoBehaviour
 		public Transform self;
 		public Transform graphics;
 		public Animator anim; // not used here because it's a simple example script. But it could be !
+		public VirtualJoystick virtualJoystick;
 	#endregion
 
 	#region Physic data
@@ -28,7 +29,8 @@ public class PlatformingInputHandler : MonoBehaviour
 		public float baseSpeed;
 		public float baseGravity;
 		private float currentSpeed, currentGravity;
-		private Vector2 moveDir;
+		[HideInInspector]
+		public Vector2 moveDir;
 
 		// acceleration
 		private float speedCurveModifier; // modifier due to slow acceleration or deceleration
@@ -156,14 +158,14 @@ public class PlatformingInputHandler : MonoBehaviour
 		
 		if(inputLeft && !inputRight) horizontalAxis = -1f;
 		else if (!inputLeft && inputRight) horizontalAxis = 1f;
-		else horizontalAxis = Input.GetAxis("Horizontal");
+		else horizontalAxis = Input.GetAxis("Horizontal") + virtualJoystick.GetX();
 
 		if(inputDown && !inputUp) verticalAxis = -1f;
 		else if (!inputDown && inputUp) verticalAxis = 1f;
 		else verticalAxis = Input.GetAxis("Vertical");
 
-		goesLeft = inputLeft || Input.GetAxis("Horizontal") < 0;
-		goesRight = inputRight || Input.GetAxis("Horizontal") > 0;
+		goesLeft = inputLeft || Input.GetAxis("Horizontal") < 0 || virtualJoystick.GetX() < 0;
+		goesRight = inputRight || Input.GetAxis("Horizontal") > 0 || virtualJoystick.GetX() > 0;
 		goesUp = inputUp || Input.GetAxis("Vertical") > 0;
 		goesDown = inputDown || Input.GetAxis("Vertical") < 0;
 	}
