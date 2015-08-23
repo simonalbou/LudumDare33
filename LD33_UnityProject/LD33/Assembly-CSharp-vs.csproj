@@ -52,6 +52,7 @@
      <Compile Include="Assets\Bodyparts\BodypartIcon.cs" />
      <Compile Include="Assets\Environnements\Psy\Scripts\Background.cs" />
      <Compile Include="Assets\Environnements\Psy\Scripts\ComportementEnnemis.cs" />
+     <Compile Include="Assets\Environnements\Psy\Scripts\MovingPlatform.cs" />
      <Compile Include="Assets\Environnements\Psy\Scripts\MovingRocks.cs" />
      <Compile Include="Assets\Environnements\Psy\Scripts\Parallaxe.cs" />
      <Compile Include="Assets\Gameplay\MainCameraBehaviour.cs" />
