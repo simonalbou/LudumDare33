@@ -7,6 +7,8 @@ public class ComportementEnnemis : MonoBehaviour
     private Vector2 positionBase;
     private Transform self;
     public bool fly;
+    public bool walk;
+    public bool longRange;
     private bool attack;
     public float baseSpeed;
     public float attackSpeed;
@@ -22,31 +24,44 @@ public class ComportementEnnemis : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        if (Vector2.Distance(player.position, self.position) < 3f)
+        if (fly)
         {
-            attack = true;
-        }
-        else
-        {
-            attack = false;
+            if (Vector2.Distance(player.position, self.position) < 3f)
+            {
+                attack = true;
+            }
+            else
+            {
+                attack = false;
+            }
+
+            Quaternion angleRotation;
+            float speed;
+            if (attack)
+            {
+                angleRotation = Quaternion.LookRotation(Vector3.forward, player.position - transform.position);
+                speed = attackSpeed;
+            }
+            else
+            {
+                angleRotation = Quaternion.LookRotation(Vector3.forward, positionBase - (Vector2)transform.position);
+                speed = baseSpeed;
+            }
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, angleRotation, Time.deltaTime * speed);
+            transform.GetChild(0).rotation = Quaternion.LookRotation(Vector3.forward, new Vector3(0f, 0f, 0f));
+
+            transform.Translate(transform.up * Time.deltaTime * speed, Space.World);
         }
 
-        Quaternion angleRotation;
-        float speed;
-        if (attack)
+        if (longRange)
         {
-            angleRotation = Quaternion.LookRotation(Vector3.forward, player.position - transform.position);
-            speed = attackSpeed;
-        }
-        else
-        {
-            angleRotation = Quaternion.LookRotation(Vector3.forward, positionBase - (Vector2)transform.position);
-            speed = baseSpeed;
+
         }
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, angleRotation, Time.deltaTime * speed);
-        transform.GetChild(0).rotation = Quaternion.LookRotation(Vector3.forward, new Vector3(0f, 0f, 0f));
+        if (walk)
+        {
 
-        transform.Translate(transform.up * Time.deltaTime * speed, Space.World);
+        }
 	}
 }
