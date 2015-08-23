@@ -5,7 +5,7 @@ using System.Collections;
 public class BodypartIcon : MonoBehaviour {
 
 	public Transform self;
-	public Image selfImage;
+	public SpriteRenderer selfImage;
 	[HideInInspector]
 	public Vector3 initPosition;
 	public TextBoxPool textBoxPool;
