@@ -84,9 +84,14 @@ public class CustomMenu : Editor {
 						break;
                 }
 
-				GameObject graphics = GameObject.FindGameObjectWithTag(tagToCheck);
-				bp.playerGraphics = graphics.GetComponent<SpriteRenderer>();
-				bp.playerAnimator = graphics.GetComponent<Animator>();
+				GameObject graphicsFront = GameObject.FindGameObjectWithTag(tagToCheck);
+				bp.playerGraphicsFront = graphicsFront.GetComponent<SpriteRenderer>();
+				bp.playerAnimatorFront = graphicsFront.GetComponent<Animator>();
+
+				GameObject graphicsBehind = GameObject.FindGameObjectWithTag(tagToCheck + "_Behind");
+				bp.playerGraphicsBehind = graphicsBehind.GetComponent<SpriteRenderer>();
+				bp.playerAnimatorBehind = graphicsBehind.GetComponent<Animator>();
+
 				EditorUtility.SetDirty(bp);
 			}
 

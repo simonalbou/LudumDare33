@@ -19,23 +19,37 @@ public class Bodypart : MonoBehaviour {
 	public AnimationCurve alternativeJumpCurve;
 	private AnimationCurve oldJumpCurve;
 
+	[Header("Graphics - Front")]
+	public Sprite characterSpriteFront;
+	public RuntimeAnimatorController animatorControllerFront;
+
+	[Header("Graphics - Behind")]
+	public Sprite characterSpriteBehind;
+	public RuntimeAnimatorController animatorControllerBehind;
+
+	[Header("Flavor things")]
+	public Sprite icon;
+	public string bodypartName, flavorText;
+
 	[Header("References")]
-	public SpriteRenderer playerGraphics;
-	public Animator playerAnimator;
+	public SpriteRenderer playerGraphicsFront;
+	public Animator playerAnimatorFront;
+	public SpriteRenderer playerGraphicsBehind;
+	public Animator playerAnimatorBehind;
 	public PlatformingInputHandler playerScript;
 	public AttackableObject playerBattleStats;
 
-	[Header("Graphics")]
-	public Sprite characterSprite;
-	public Sprite icon;
-	public RuntimeAnimatorController animatorController;
-	public string bodypartName, flavorText;
-
-
 	public virtual void OnJustObtained()
 	{
-		if(characterSprite) playerGraphics.sprite = characterSprite;
-		if(animatorController) playerAnimator.runtimeAnimatorController = animatorController;
+		if (characterSpriteFront) playerGraphicsFront.sprite = characterSpriteFront;
+		else playerGraphicsFront.sprite = null;
+		if (animatorControllerFront) playerAnimatorFront.runtimeAnimatorController = animatorControllerFront;
+		else playerAnimatorFront.runtimeAnimatorController = null;
+
+		if (characterSpriteBehind) playerGraphicsBehind.sprite = characterSpriteBehind;
+		else playerGraphicsBehind.sprite = null;
+		if (animatorControllerBehind) playerAnimatorBehind.runtimeAnimatorController = animatorControllerBehind;
+		else playerAnimatorBehind.runtimeAnimatorController = null;
 
 		playerBattleStats.atkMultiplier *= atkMultiplier;
 		playerBattleStats.defMultiplier *= defMultiplier;
