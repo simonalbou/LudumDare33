@@ -35,6 +35,7 @@ public class CustomMenu : Editor {
 		BodypartButton[] orderedButtons = new BodypartButton[4];
 		foreach(BodypartButton bb in buttons)
 		{
+			Debug.Log(bb.slotNumber);
 			orderedButtons[bb.slotNumber] = bb;
 		}
 
