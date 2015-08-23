@@ -26,14 +26,15 @@ public class Bodypart : MonoBehaviour {
 	public AttackableObject playerBattleStats;
 
 	[Header("Graphics")]
-	public Sprite sprite;
+	public Sprite characterSprite;
+	public Sprite icon;
 	public RuntimeAnimatorController animatorController;
 	public string bodypartName, flavorText;
 
 
 	public virtual void OnJustObtained()
 	{
-		if(sprite) playerGraphics.sprite = sprite;
+		if(characterSprite) playerGraphics.sprite = characterSprite;
 		if(animatorController) playerAnimator.runtimeAnimatorController = animatorController;
 
 		playerBattleStats.atkMultiplier *= atkMultiplier;

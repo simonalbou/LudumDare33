@@ -35,6 +35,7 @@ public class CustomMenu : Editor {
 		BodypartButton[] orderedButtons = new BodypartButton[4];
 		foreach(BodypartButton bb in buttons)
 		{
+			Debug.Log(bb.slotNumber);
 			orderedButtons[bb.slotNumber] = bb;
 		}
 
@@ -87,6 +88,13 @@ public class CustomMenu : Editor {
 				bp.playerGraphics = graphics.GetComponent<SpriteRenderer>();
 				bp.playerAnimator = graphics.GetComponent<Animator>();
 				EditorUtility.SetDirty(bp);
+			}
+
+			if(go.GetComponent<ComportementEnnemis>())
+			{
+				ComportementEnnemis ce = go.GetComponent<ComportementEnnemis>();
+				ce.player = player.transform;
+				EditorUtility.SetDirty(ce);
 			}
 		}
 
