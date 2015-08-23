@@ -23,7 +23,7 @@ public class Background : MonoBehaviour
     {
         if (tr.position.x < trBG.position.x)
         {
-
+            tr.position = new Vector2(tr.position.x + 25.6f, tr.position.y);
         }
 	}
 }
