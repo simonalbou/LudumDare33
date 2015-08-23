@@ -37,19 +37,16 @@ public class VirtualJoystick : MonoBehaviour
         {
             Touch tch = Input.GetTouch(0);
             fingerId1 = tch.fingerId;
-            if (tch.fingerId == fingerId1)
+            if (tch.fingerId == fingerId1 && Camera.main.ScreenToViewportPoint(tch.position).x < 0.5f)
             {
                 if (tch.phase == TouchPhase.Began)
                 {
-                    if (Camera.main.ScreenToViewportPoint(tch.position).x < 0.5f)
-                    {
-                        basePosition = Camera.main.ScreenToWorldPoint(tch.position);
-                        trsfrm.position = basePosition;
-                        spr.enabled = true;
+                    basePosition = Camera.main.ScreenToWorldPoint(tch.position);
+                    trsfrm.position = basePosition;
+                    spr.enabled = true;
 
-                        transformCercle.position = basePosition;
-                        sprCercle.enabled = true;
-                    }
+                    transformCercle.position = basePosition;
+                    sprCercle.enabled = true;
                 }
                 if (tch.phase == TouchPhase.Ended)
                 {

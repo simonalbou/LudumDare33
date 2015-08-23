@@ -76,6 +76,15 @@ public class CustomMenu : Editor {
 			}
 		}
 
+		PlatformingInputHandler pih = player.GetComponent<PlatformingInputHandler>();
+		pih.virtualJoystick = GameObject.FindGameObjectWithTag("VirtualJoystick").GetComponent<VirtualJoystick>();
+		EditorUtility.SetDirty(pih);
+
+		MainCameraBehaviour mcb = Camera.main.GetComponent<MainCameraBehaviour>();
+		mcb.player = player.transform;
+		mcb.controller = pih;
+		EditorUtility.SetDirty(mcb);
+
 		Debug.Log("Done !");
 	}
 }
