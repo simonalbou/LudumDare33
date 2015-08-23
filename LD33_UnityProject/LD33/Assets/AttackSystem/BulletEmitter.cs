@@ -59,6 +59,7 @@ public class BulletEmitter : MonoBehaviour {
 		temp.self.position = self.position + startPosition;
 		temp.self.eulerAngles = Vector3.forward * (self.eulerAngles.z+startRotation);
 		if (isChild) temp.self.parent = self;
+		else temp.self.parent = null;
 
 		temp.GetShot();
 	}

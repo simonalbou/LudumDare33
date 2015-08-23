@@ -105,6 +105,13 @@ public class CustomMenu : Editor {
 				bullet.URScreenCorner = GameObject.FindGameObjectWithTag("TopRightOfCamera").transform;
 				EditorUtility.SetDirty(bullet);
 			}
+
+			if(go.GetComponent<AttackPattern>())
+			{
+				AttackPattern ap = go.GetComponent<AttackPattern>();
+				ap.player = player.transform;
+				EditorUtility.SetDirty(ap);
+			}
 		}
 
 		touchManager.allIcons = allIconsAsList.ToArray();

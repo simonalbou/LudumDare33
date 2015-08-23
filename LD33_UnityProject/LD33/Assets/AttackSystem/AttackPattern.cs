@@ -18,9 +18,9 @@ public class AttackPattern : MonoBehaviour {
 	public virtual void Fire()
 	{
 		bulletEmitter.ShootTowards(player.position);
-		bulletEmitter.Rotate(30);
+		bulletEmitter.Rotate(15);
 		bulletEmitter.SimpleShoot();
-		bulletEmitter.Rotate(-60);
+		bulletEmitter.Rotate(-30);
 		bulletEmitter.SimpleShoot();
 	}
 }

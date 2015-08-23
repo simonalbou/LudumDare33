@@ -64,8 +64,10 @@ public class Bullet : MonoBehaviour
 
 	public void LookAt(Vector3 dest)
 	{
-		float angle = Mathf.Atan2(dest.y, dest.x) * Mathf.Rad2Deg - 90.0f;
+		float angle = Mathf.Atan2(dest.y-self.position.y, dest.x-self.position.x) * Mathf.Rad2Deg - 90.0f;
 		self.eulerAngles = Vector3.forward * angle;
+		
+		// PK SA MARCH PA
 	}
 
 	// Homing behaviour
