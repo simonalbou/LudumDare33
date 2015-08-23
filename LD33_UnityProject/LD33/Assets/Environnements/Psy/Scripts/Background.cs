@@ -14,16 +14,16 @@ public class Background : MonoBehaviour
 	void Start () 
     {
         tr = transform;
-        trBG = bordGauche.transform;
-        trBD = bordDroit.transform;
+        //trBG = bordGauche.transform;
+        //trBD = bordDroit.transform;
 	}
 	
 	// Update is called once per frame
-	void Update () 
+	/*void Update () 
     {
         if (tr.position.x < trBG.position.x)
         {
-
+            tr.position = new Vector2(tr.position.x + 25.6f, tr.position.y);
         }
-	}
+	}*/
 }
