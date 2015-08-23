@@ -15,6 +15,8 @@ public class VirtualJoystick : MonoBehaviour
     private GameObject cercleGO;
     private SpriteRenderer sprCercle;
     private Transform transformCercle;
+    private bool bouge = false;
+    private bool moitie = false;
 
     void Start()
     {
@@ -22,6 +24,7 @@ public class VirtualJoystick : MonoBehaviour
         spr = GetComponent<SpriteRenderer>();
         newPosition = basePosition;
         cercleGO = Instantiate(cercle, Vector2.zero, Quaternion.identity) as GameObject;
+        cercleGO.transform.parent = Camera.main.transform;
         sprCercle = cercleGO.GetComponent<SpriteRenderer>();
         transformCercle = cercleGO.transform;
     }
@@ -41,7 +44,11 @@ public class VirtualJoystick : MonoBehaviour
             {
                 if (tch.phase == TouchPhase.Began)
                 {
-                    if (Camera.main.ScreenToWorldPoint(tch.position).x < 0.5f)
+                    if (Camera.main.ScreenToViewportPoint(tch.position).x < 0.5f)
+                    {
+                        moitie = true;
+                    }
+                    if (moitie)
                     {
                         basePosition = Camera.main.ScreenToWorldPoint(tch.position);
                         trsfrm.position = basePosition;
@@ -53,26 +60,29 @@ public class VirtualJoystick : MonoBehaviour
                 }
                 if (tch.phase == TouchPhase.Ended)
                 {
+                    moitie = false;
+                    bouge = false;
                     spr.enabled = false;
-                    newPosition = basePosition;
+                    newPosition = cercleGO.transform.position;
                     sprCercle.enabled = false;
                 }
                 if (tch.phase == TouchPhase.Moved || tch.phase == TouchPhase.Stationary)
                 {
-                    if (Vector2.Distance(Camera.main.ScreenToWorldPoint(tch.position), basePosition) < 0.8f)
+                    bouge = true;
+                    if (Vector2.Distance(Camera.main.ScreenToWorldPoint(tch.position), cercleGO.transform.position) < 0.8f)
                     {
                         newPosition = Camera.main.ScreenToWorldPoint(tch.position);
                     }
                     else
                     {
                         Vector2 test = Camera.main.ScreenToWorldPoint(tch.position);
-                        Vector2 test2 = basePosition - test;
-                        newPosition = -test2.normalized * 0.8f + basePosition;
+                        Vector2 test3 = cercleGO.transform.position;
+                        Vector2 test2 = test3 - test;
+                        newPosition = -test2.normalized * 0.8f + test3;
                     }
 
                     //Déplacement
                     trsfrm.position = newPosition;
-
                 }
             }
         }
@@ -118,6 +128,21 @@ public class VirtualJoystick : MonoBehaviour
 
     public float GetX()
     {
-        return (((newPosition.x - basePosition.x) / 0.8f));
+        if (bouge)
+        {
+            if (moitie)
+            {
+                Vector2 positionCercleExterieur = cercleGO.transform.position;
+                return (((newPosition.x - positionCercleExterieur.x) / 0.8f));
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        else
+        {
+            return 0;
+        }
     }
 }
