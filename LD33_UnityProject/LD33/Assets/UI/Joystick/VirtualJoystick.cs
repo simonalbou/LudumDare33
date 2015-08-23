@@ -36,9 +36,9 @@ public class VirtualJoystick : MonoBehaviour
          * Gestion du déplacement du cercle intérieur avec le multitouch
          */
         int tapCount = Input.touchCount;
-        for (int  i = 0; i < tapCount; i++)
+        for (int i = 0; i < tapCount; i++)
         {
-            Touch tch = Input.GetTouch(0);
+            Touch tch = Input.GetTouch(i);
             fingerId1 = tch.fingerId;
             if (tch.fingerId == fingerId1)
             {
