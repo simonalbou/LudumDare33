@@ -16,6 +16,7 @@ public class CustomMenu : Editor {
 
 		GameObject player = GameObject.FindGameObjectWithTag("Player");
 		GameObject playerGraphics = GameObject.FindGameObjectWithTag("PlayerGraphics");
+		TouchManager touchManager = GameObject.FindGameObjectWithTag("TouchManager").GetComponent<TouchManager>();
 
 		TextBoxPool tbp = null;
 		List<BodypartButton> buttons = new List<BodypartButton>();
@@ -37,13 +38,26 @@ public class CustomMenu : Editor {
 			orderedButtons[bb.slotNumber] = bb;
 		}
 
+		List<BodypartIcon> allIconsAsList = new List<BodypartIcon>();
+
 		foreach (GameObject go in all)
 		{
+			if (go.GetComponent<BodypartButton>())
+			{
+				BodypartButton bb = go.GetComponent<BodypartButton>();
+				bb.textBoxPool = tbp;
+				EditorUtility.SetDirty(bb);
+			}
+
 			if (go.GetComponent<BodypartIcon>())
 			{
 				BodypartIcon bpi = go.GetComponent<BodypartIcon>();
+				allIconsAsList.Add(bpi);
+
 				bpi.textBoxPool = tbp;
 				bpi.bodyPartButtons = orderedButtons;
+				bpi.mainCam = Camera.main.GetComponent<Camera>();
+				bpi.touchManager = touchManager;
 				EditorUtility.SetDirty(bpi);
 			}
 
@@ -76,8 +90,16 @@ public class CustomMenu : Editor {
 			}
 		}
 
+		touchManager.allIcons = allIconsAsList.ToArray();
+		EditorUtility.SetDirty(touchManager);
+
+		VirtualJoystick vj = GameObject.FindGameObjectWithTag("VirtualJoystick").GetComponent<VirtualJoystick>();
+		vj.touchManager = touchManager;
+		vj.mainCam = Camera.main.GetComponent<Camera>();
+		EditorUtility.SetDirty(vj);
+
 		PlatformingInputHandler pih = player.GetComponent<PlatformingInputHandler>();
-		pih.virtualJoystick = GameObject.FindGameObjectWithTag("VirtualJoystick").GetComponent<VirtualJoystick>();
+		pih.virtualJoystick = vj;
 		EditorUtility.SetDirty(pih);
 
 		MainCameraBehaviour mcb = Camera.main.GetComponent<MainCameraBehaviour>();

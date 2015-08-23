@@ -6,18 +6,22 @@ public class BodypartButton : MonoBehaviour {
 
 	public int slotNumber; // 0 = head, 1 = arms, 2 = misc, 3 = legs
 
-	// Cooldown-related vars
+	// Button-related vars
 	public Image grayFilter;
 	private float currentCooldown;
+	private float clickTimestamp;
+	private bool buttonDown;
 
 	// References
 	public BodypartIcon currentIcon;
 	public Transform self;
 	public Image selfImage;
+	public TextBoxPool textBoxPool;
+	private TextBox currentTextBox = null;
 
 	public void Start()
 	{
-		currentIcon.isPlacedInSlot = true;
+		currentIcon.enabled = false;
 		currentIcon.bodyPart.OnJustObtained();
 	}
 
@@ -34,6 +38,25 @@ public class BodypartButton : MonoBehaviour {
 			currentCooldown = 0;
 			grayFilter.fillAmount = 0;
 		}
+
+		if(buttonDown && currentTextBox == null && Time.time - clickTimestamp > 0.7f)
+		{
+			currentTextBox = textBoxPool.Spawn(self.position, currentIcon.bodyPart.bodypartName, currentIcon.bodyPart.flavorText);
+		}
+	}
+
+	public void OnClick()
+	{
+		buttonDown = true;
+		clickTimestamp = Time.time;
+	}
+	
+	public void OnRelease()
+	{
+		buttonDown = false;
+		if (currentTextBox != null) currentTextBox.Unspawn();
+		else UseBodyPart();
+		currentTextBox = null;
 	}
 
 	public void UseBodyPart()

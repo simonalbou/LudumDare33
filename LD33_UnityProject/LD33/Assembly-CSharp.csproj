@@ -56,6 +56,7 @@
      <Compile Include="Assets\Environnements\Psy\Scripts\Parallaxe.cs" />
      <Compile Include="Assets\Gameplay\MainCameraBehaviour.cs" />
      <Compile Include="Assets\GlobalData\KeyBinding.cs" />
+     <Compile Include="Assets\GlobalData\TouchManager.cs" />
      <Compile Include="Assets\Physics\Scripts\CharacterController2D.cs" />
      <Compile Include="Assets\Physics\Scripts\PlatformingInputHandler.cs" />
      <Compile Include="Assets\Physics\Scripts\Raycaster.cs" />
