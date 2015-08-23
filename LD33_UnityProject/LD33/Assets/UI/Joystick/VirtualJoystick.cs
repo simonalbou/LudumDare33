@@ -18,7 +18,9 @@ public class VirtualJoystick : MonoBehaviour
     private bool bouge = false;
     private bool moitie = false;
 
+	[Header("References")]
 	public TouchManager touchManager;
+	public Camera mainCam;
 
     void Start()
     {
@@ -42,26 +44,31 @@ public class VirtualJoystick : MonoBehaviour
 		for (int i = 0; i < tapCount; i++)
 		{
 			Touch tch = Input.GetTouch(i);
+
 			if (tch.phase == TouchPhase.Began)
 			{
+				// We only take inputs from the left part of the screen
+				if (mainCam.ScreenToViewportPoint(tch.position).x > 0.5f) continue;
+				
+				// If the joystick already exists, we don't take this one
 				if (touchManager.joystickTouchId != -1) continue;
-				if (Camera.main.ScreenToViewportPoint(tch.position).x < 0.5f)
-				{
-					moitie = true;
-				}
-				if (moitie)
-				{
-					touchManager.joystickTouchId = tch.fingerId;
-					basePosition = Camera.main.ScreenToWorldPoint(tch.position);
-					trsfrm.position = basePosition;
-					spr.enabled = true;
 
-					transformCercle.position = basePosition;
-					sprCercle.enabled = true;
-				}
+				// If this finger already manages a BodyPartIcon, we don't take it either
+				if (!touchManager.IsFingerAvailableForJoystick(tch.fingerId)) continue;
+
+				moitie = true;
+				touchManager.joystickTouchId = tch.fingerId;
+				basePosition = Camera.main.ScreenToWorldPoint(tch.position);
+				trsfrm.position = basePosition;
+				spr.enabled = true;
+
+				transformCercle.position = basePosition;
+				sprCercle.enabled = true;
+				
 				continue;
 			}
 
+			// After the first frame for a given input, we only use the right fingerId.
 			if (tch.fingerId != touchManager.joystickTouchId) break;
 
 			if (tch.phase == TouchPhase.Ended)
@@ -76,13 +83,13 @@ public class VirtualJoystick : MonoBehaviour
 			if (tch.phase == TouchPhase.Moved || tch.phase == TouchPhase.Stationary)
 			{
 				bouge = true;
-				if (Vector2.Distance(Camera.main.ScreenToWorldPoint(tch.position), cercleGO.transform.position) < 0.8f)
+				if (Vector2.Distance(mainCam.ScreenToWorldPoint(tch.position), cercleGO.transform.position) < 0.8f)
 				{
-					newPosition = Camera.main.ScreenToWorldPoint(tch.position);
+					newPosition = mainCam.ScreenToWorldPoint(tch.position);
 				}
 				else
 				{
-					Vector2 test = Camera.main.ScreenToWorldPoint(tch.position);
+					Vector2 test = mainCam.ScreenToWorldPoint(tch.position);
 					Vector2 test3 = cercleGO.transform.position;
 					Vector2 test2 = test3 - test;
 					newPosition = -test2.normalized * 0.8f + test3;
