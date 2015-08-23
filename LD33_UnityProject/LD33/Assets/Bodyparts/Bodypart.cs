@@ -14,6 +14,7 @@ public class Bodypart : MonoBehaviour {
 	public float speedIncrease;
 	public float gravityIncrease;
 	public int extraAllowedJumps;
+	public bool makesPlayerJump = false;
 	public bool affectsJumpCurve = false;
 	public AnimationCurve alternativeJumpCurve;
 	private AnimationCurve oldJumpCurve;
@@ -50,7 +51,7 @@ public class Bodypart : MonoBehaviour {
 
 	public virtual void OnUsingBodypart()
 	{
-
+		if (makesPlayerJump) playerScript.Jump();
 	}
 
 	public virtual void OnJustLost()

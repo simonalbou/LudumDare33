@@ -22,6 +22,8 @@ public class BodypartButton : MonoBehaviour {
 	public void Start()
 	{
 		currentIcon.enabled = false;
+		currentIcon.selfImage.enabled = false;
+		selfImage.sprite = currentIcon.selfImage.sprite;
 		currentIcon.bodyPart.OnJustObtained();
 	}
 

@@ -71,6 +71,17 @@ public class VirtualJoystick : MonoBehaviour
 			// After the first frame for a given input, we only use the right fingerId.
 			if (tch.fingerId != touchManager.joystickTouchId) break;
 
+			// Turns out we have to constantly check if the same finger has not been assigned to an icon at the first frame.
+			if (!touchManager.IsFingerAvailableForJoystick(tch.fingerId))
+			{
+				moitie = false;
+				bouge = false;
+				spr.enabled = false;
+				sprCercle.enabled = false;
+				touchManager.joystickTouchId = -1;
+				break;
+			}
+
 			if (tch.phase == TouchPhase.Ended)
 			{
 				moitie = false;
