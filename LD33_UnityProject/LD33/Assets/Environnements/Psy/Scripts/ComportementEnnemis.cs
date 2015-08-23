@@ -94,7 +94,7 @@ public class ComportementEnnemis : MonoBehaviour
 	{
 		Quaternion angleRotation;
 		float speed;
-		if (attacking)
+		if (attacking && chargesPlayer)
 		{
 			angleRotation = Quaternion.LookRotation(Vector3.forward, player.position - transform.position);
 			speed = speedWhileAttacking;
@@ -113,7 +113,7 @@ public class ComportementEnnemis : MonoBehaviour
 
 	public virtual void UpdateWalk()
 	{
-		if (attacking)
+		if (attacking && chargesPlayer)
 		{
 			cc2d.Move(new Vector2(Mathf.Sign(self.position.x - player.position.x) * -speedWhileAttacking * Time.deltaTime, 0f));
 		}
