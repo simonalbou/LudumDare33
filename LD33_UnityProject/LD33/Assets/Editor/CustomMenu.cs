@@ -76,8 +76,12 @@ public class CustomMenu : Editor {
 			}
 		}
 
+		VirtualJoystick vj = GameObject.FindGameObjectWithTag("VirtualJoystick").GetComponent<VirtualJoystick>();
+		vj.touchManager = GameObject.FindGameObjectWithTag("TouchManager").GetComponent<TouchManager>();
+		EditorUtility.SetDirty(vj);
+
 		PlatformingInputHandler pih = player.GetComponent<PlatformingInputHandler>();
-		pih.virtualJoystick = GameObject.FindGameObjectWithTag("VirtualJoystick").GetComponent<VirtualJoystick>();
+		pih.virtualJoystick = vj;
 		EditorUtility.SetDirty(pih);
 
 		MainCameraBehaviour mcb = Camera.main.GetComponent<MainCameraBehaviour>();
