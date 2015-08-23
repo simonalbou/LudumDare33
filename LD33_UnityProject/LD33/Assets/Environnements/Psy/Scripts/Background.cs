@@ -23,7 +23,6 @@ public class Background : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        tr.position = new Vector2(tr.position.x + (-controller.moveDir.x * vitesseParallaxe), tr.position.y);
         if (Mathf.Sign(controller.moveDir.x) > 0)
         {
             if (tr.position.x < trBG.position.x)
@@ -38,5 +37,6 @@ public class Background : MonoBehaviour
                 tr.position = new Vector2(tr.position.x - 38.4f, tr.position.y);
             }
         }
+        tr.position = new Vector2(tr.position.x + (-controller.moveDir.x * vitesseParallaxe * Time.deltaTime), tr.position.y);
 	}
 }
