@@ -41,9 +41,9 @@ public class VirtualJoystick : MonoBehaviour
             {
                 if (tch.phase == TouchPhase.Began)
                 {
-                    if (Camera.main.ScreenToViewportPoint(tch.position).x < 0.5f)
+                    if (tch.position.x < 640)
                     {
-                        basePosition = Camera.main.ScreenToWorldPoint(tch.position);
+                        basePosition = tch.position;
                         trsfrm.position = basePosition;
                         spr.enabled = true;
 
@@ -59,15 +59,15 @@ public class VirtualJoystick : MonoBehaviour
                 }
                 if (tch.phase == TouchPhase.Moved || tch.phase == TouchPhase.Stationary)
                 {
-                    if (Vector2.Distance(Camera.main.ScreenToWorldPoint(tch.position), basePosition) < 0.8f)
+                    if (Vector2.Distance(tch.position, basePosition) < 80f)
                     {
-                        newPosition = Camera.main.ScreenToWorldPoint(tch.position);
+                        newPosition = tch.position;
                     }
                     else
                     {
-                        Vector2 test = Camera.main.ScreenToWorldPoint(tch.position);
+                        Vector2 test = tch.position;
                         Vector2 test2 = basePosition - test;
-                        newPosition = -test2.normalized * 0.8f + basePosition;
+                        newPosition = -test2.normalized * 80f + basePosition;
                     }
 
                     //Déplacement
@@ -109,6 +109,6 @@ public class VirtualJoystick : MonoBehaviour
 
     public float GetX()
     {
-        return (((newPosition.x - basePosition.x) / 0.8f));
+        return (((newPosition.x - basePosition.x) / 80f));
     }
 }
