@@ -60,6 +60,7 @@
      <Compile Include="Assets\Environnements\Psy\Scripts\MovingRocks.cs" />
      <Compile Include="Assets\Environnements\Psy\Scripts\Parallaxe.cs" />
      <Compile Include="Assets\Gameplay\MainCameraBehaviour.cs" />
+     <Compile Include="Assets\Gameplay\MonsterDeathManager.cs" />
      <Compile Include="Assets\GlobalData\KeyBinding.cs" />
      <Compile Include="Assets\GlobalData\TouchManager.cs" />
      <Compile Include="Assets\Physics\Scripts\CharacterController2D.cs" />

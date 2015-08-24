@@ -117,6 +117,13 @@ public class CustomMenu : Editor {
 				ap.player = player.transform;
 				EditorUtility.SetDirty(ap);
 			}
+
+			if(go.GetComponent<MonsterDeathManager>())
+			{
+				MonsterDeathManager mdm = go.GetComponent<MonsterDeathManager>();
+				mdm.deathVFXPool = GameObject.FindGameObjectWithTag("ParticlePool_EnemyDeath").GetComponent<ParticlePool>();
+				EditorUtility.SetDirty(mdm);
+			}
 		}
 
 		touchManager.allIcons = allIconsAsList.ToArray();

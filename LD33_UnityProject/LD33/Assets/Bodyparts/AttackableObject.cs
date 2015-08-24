@@ -12,8 +12,10 @@ public class AttackableObject : MonoBehaviour {
 	public float atkMultiplier = 1;
 	public float defMultiplier = 1;
 
+	[Header("References")]
 	public Transform lifeBar;
 	public SpriteRenderer lifeBarSprite;
+	public MonsterDeathManager deathManager;
 
 	// Who can shoot at this ?
 	[Header("Collision Things")]
@@ -45,6 +47,8 @@ public class AttackableObject : MonoBehaviour {
 	{
 		if (isInvincible && Time.time > invincibilityTimeStamp + invincibilityDuration)
 			isInvincible = false;
+
+		if (Input.GetKeyDown(KeyCode.K)) Die();
 	}
 
 	public void Hurt(float dmg)
@@ -59,8 +63,15 @@ public class AttackableObject : MonoBehaviour {
 
 		if (curHealth == 0) Die();
 	}
-
+	
+	// if the death manager is not specified, we'll assume this script refers to the player, whose death leads to a game over.
 	public void Die()
+	{
+		if (deathManager) deathManager.LaunchDeath();
+		else GameOver();
+	}
+
+	public void GameOver()
 	{
 
 	}
