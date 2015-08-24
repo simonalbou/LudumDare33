@@ -11,7 +11,9 @@ public class BulletEmitter : MonoBehaviour {
 	public Transform target;
 	public Bullet selfBullet;
 	public Bullet[] bullets;
-	public BulletEmitter[] emitters;
+	public CircleCollider2D[] bulletHitboxes;
+	public SpriteRenderer[] bulletGraphics;
+	public BulletEmitter[] subEmitters;
 	
 	[Header("Default Behaviour")]
 	public bool continuousShooting; // enables default automatic behaviour
@@ -96,12 +98,12 @@ public class BulletEmitter : MonoBehaviour {
     // Shuts down every sub-emitter of this emitter.
 	public void KillEmitters()
 	{
-		if(emitters.Length == 0) return;
-		for(int i=0; i<emitters.Length; i++)
+		if(subEmitters.Length == 0) return;
+		for(int i=0; i< subEmitters.Length; i++)
 		{
-			if (!emitters[i].canShoot) continue;
-			emitters[i].canShoot = false;
-			emitters[i].KillEmitters();
+			if (!subEmitters[i].canShoot) continue;
+			subEmitters[i].canShoot = false;
+			subEmitters[i].KillEmitters();
 		}
 	}
 	
@@ -109,5 +111,17 @@ public class BulletEmitter : MonoBehaviour {
 	public void Rotate(float angle)
 	{
 		selfBullet.Rotate(angle);
+	}
+
+	// Shortcut : change bullet graphics
+	public void ChangeBullets(Sprite sprite, float hitboxRadius)
+	{
+		for(int i=0; i<bullets.Length; i++)
+		{
+			bulletHitboxes[i].radius = hitboxRadius;
+
+			if (sprite != null) bulletGraphics[i].sprite = sprite;
+			else bulletGraphics[i].sprite = null;
+		}
 	}
 }

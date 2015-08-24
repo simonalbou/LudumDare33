@@ -54,6 +54,8 @@
      <Compile Include="Assets\Bodyparts\Bodypart.cs" />
      <Compile Include="Assets\Bodyparts\BodypartButton.cs" />
      <Compile Include="Assets\Bodyparts\BodypartIcon.cs" />
+     <Compile Include="Assets\Bodyparts\SpecialAttack.cs" />
+     <Compile Include="Assets\Bodyparts\SpecialAttack_Template.cs" />
      <Compile Include="Assets\Environnements\Psy\Scripts\Background.cs" />
      <Compile Include="Assets\Environnements\Psy\Scripts\ComportementEnnemis.cs" />
      <Compile Include="Assets\Environnements\Psy\Scripts\MovingPlatform.cs" />

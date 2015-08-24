@@ -67,30 +67,36 @@ public class CustomMenu : Editor {
 				Bodypart bp = go.GetComponent<Bodypart>();
 				bp.playerScript = player.GetComponent<PlatformingInputHandler>();
 				bp.playerBattleStats = playerHitbox.GetComponent<AttackableObject>();
-				string tagToCheck = "";
+				string graphicsTagToCheck = "";
 				switch (bp.slotNumber)
 				{
 					case 0:
-						tagToCheck = "PlayerGraphics_Blue";
+						graphicsTagToCheck = "PlayerGraphics_Blue";
 						break;
 					case 1:
-						tagToCheck = "PlayerGraphics_Green";
+						graphicsTagToCheck = "PlayerGraphics_Green";
 						break;
 					case 2:
-						tagToCheck = "PlayerGraphics_Yellow";
+						graphicsTagToCheck = "PlayerGraphics_Yellow";
 						break;
 					case 3:
-						tagToCheck = "PlayerGraphics_Red";
+						graphicsTagToCheck = "PlayerGraphics_Red";
 						break;
                 }
 
-				GameObject graphicsFront = GameObject.FindGameObjectWithTag(tagToCheck);
+				GameObject graphicsFront = GameObject.FindGameObjectWithTag(graphicsTagToCheck);
 				bp.playerGraphicsFront = graphicsFront.GetComponent<SpriteRenderer>();
 				bp.playerAnimatorFront = graphicsFront.GetComponent<Animator>();
 
-				GameObject graphicsBehind = GameObject.FindGameObjectWithTag(tagToCheck + "_Behind");
+				GameObject graphicsBehind = GameObject.FindGameObjectWithTag(graphicsTagToCheck + "_Behind");
 				bp.playerGraphicsBehind = graphicsBehind.GetComponent<SpriteRenderer>();
 				bp.playerAnimatorBehind = graphicsBehind.GetComponent<Animator>();
+
+				bp.playerBulletEmitters = new BulletEmitter[4];
+				bp.playerBulletEmitters[0] = GameObject.FindGameObjectWithTag("Emitter_Blue").GetComponent<BulletEmitter>();
+				bp.playerBulletEmitters[1] = GameObject.FindGameObjectWithTag("Emitter_Green").GetComponent<BulletEmitter>();
+				bp.playerBulletEmitters[2] = GameObject.FindGameObjectWithTag("Emitter_Yellow").GetComponent<BulletEmitter>();
+				bp.playerBulletEmitters[3] = GameObject.FindGameObjectWithTag("Emitter_Red").GetComponent<BulletEmitter>();
 
 				EditorUtility.SetDirty(bp);
 			}
@@ -109,6 +115,19 @@ public class CustomMenu : Editor {
 				bullet.LLScreenCorner = GameObject.FindGameObjectWithTag("BottomLeftOfCamera").transform;
 				bullet.URScreenCorner = GameObject.FindGameObjectWithTag("TopRightOfCamera").transform;
 				EditorUtility.SetDirty(bullet);
+			}
+
+			if(go.GetComponent<BulletEmitter>())
+			{
+				BulletEmitter be = go.GetComponent<BulletEmitter>();
+				be.bulletGraphics = new SpriteRenderer[be.bullets.Length];
+				be.bulletHitboxes = new CircleCollider2D[be.bullets.Length];
+				for(int i=0; i<be.bullets.Length; i++)
+				{
+					be.bulletGraphics[i] = be.bullets[i].graphics;
+					be.bulletHitboxes[i] = be.bullets[i].GetComponent<CircleCollider2D>();
+				}
+				EditorUtility.SetDirty(be);
 			}
 
 			if(go.GetComponent<AttackPattern>())
