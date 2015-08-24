@@ -46,16 +46,24 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Bodyparts\AttackableObject.cs" />
+     <Compile Include="Assets\AttackSystem\AttackPattern.cs" />
+     <Compile Include="Assets\AttackSystem\Bullet.cs" />
+     <Compile Include="Assets\AttackSystem\BulletEmitter.cs" />
+     <Compile Include="Assets\AttackSystem\ParticlePool.cs" />
      <Compile Include="Assets\Bodyparts\Bodypart.cs" />
      <Compile Include="Assets\Bodyparts\BodypartButton.cs" />
      <Compile Include="Assets\Bodyparts\BodypartIcon.cs" />
+     <Compile Include="Assets\Bodyparts\Bodyparts_Database\1_BlueSlot\HumanHead.cs" />
+     <Compile Include="Assets\Bodyparts\SpecialAttack.cs" />
+     <Compile Include="Assets\Bodyparts\SpecialAttack_Template.cs" />
      <Compile Include="Assets\Environnements\Psy\Scripts\Background.cs" />
      <Compile Include="Assets\Environnements\Psy\Scripts\ComportementEnnemis.cs" />
      <Compile Include="Assets\Environnements\Psy\Scripts\MovingPlatform.cs" />
      <Compile Include="Assets\Environnements\Psy\Scripts\MovingRocks.cs" />
      <Compile Include="Assets\Environnements\Psy\Scripts\Parallaxe.cs" />
+     <Compile Include="Assets\Gameplay\AttackableObject.cs" />
      <Compile Include="Assets\Gameplay\MainCameraBehaviour.cs" />
+     <Compile Include="Assets\Gameplay\MonsterDeathManager.cs" />
      <Compile Include="Assets\Gameplay\TexteDegats.cs" />
      <Compile Include="Assets\GlobalData\KeyBinding.cs" />
      <Compile Include="Assets\GlobalData\TouchManager.cs" />
