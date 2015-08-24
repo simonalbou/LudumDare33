@@ -150,6 +150,19 @@ public class CustomMenu : Editor {
 				ao.player = player.GetComponentInChildren<AttackableObject>();
 				EditorUtility.SetDirty(ao);
 			}
+
+			if(go.GetComponent<Background>())
+			{
+				Background bg = go.GetComponent<Background>();
+				bg.bordGauche = GameObject.FindGameObjectWithTag("BottomLeftOfCamera").transform;
+				bg.bordDroit = GameObject.FindGameObjectWithTag("TopRightOfCamera").transform;
+				bg.camera1 = Camera.main.GetComponent<Camera>();
+				bg.tr = bg.transform;
+				bg.camTransform = Camera.main.transform;
+				bg.camBouge = Camera.main.GetComponent<MainCameraBehaviour>();
+				bg.controller = player.GetComponent<PlatformingInputHandler>();
+				EditorUtility.SetDirty(bg);
+			}
 		}
 
 		touchManager.allIcons = allIconsAsList.ToArray();
