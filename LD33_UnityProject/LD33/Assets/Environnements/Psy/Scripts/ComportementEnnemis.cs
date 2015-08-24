@@ -21,11 +21,12 @@ public class ComportementEnnemis : MonoBehaviour
 	public bool chargesPlayer;
 	public float speedWhileAttacking;
 	public bool usesSpecialAttack;
-	//public AttackPattern attackPattern;
+	public AttackPattern attackPattern;
 
 	[Header("Basic Stats")]
 	private bool attacking;
     public float baseSpeed;
+	public float collisionDamage = 10;
     private bool droite;
 
 	[Header("References")]
@@ -48,11 +49,13 @@ public class ComportementEnnemis : MonoBehaviour
         if(Vector2.Distance(player.position, self.position) < distanceAggro)
 		{
 			attacking = true;
+			if (usesSpecialAttack) attackPattern.enabled = true;
 			groupOfPathPoints.parent = self;
 		}
 		else
 		{
 			attacking = false;
+			if (usesSpecialAttack) attackPattern.enabled = false;
 			groupOfPathPoints.parent = null;
 		}
 
@@ -94,7 +97,7 @@ public class ComportementEnnemis : MonoBehaviour
 	{
 		Quaternion angleRotation;
 		float speed;
-		if (attacking)
+		if (attacking && chargesPlayer)
 		{
 			angleRotation = Quaternion.LookRotation(Vector3.forward, player.position - transform.position);
 			speed = speedWhileAttacking;
@@ -113,7 +116,7 @@ public class ComportementEnnemis : MonoBehaviour
 
 	public virtual void UpdateWalk()
 	{
-		if (attacking)
+		if (attacking && chargesPlayer)
 		{
 			cc2d.Move(new Vector2(Mathf.Sign(self.position.x - player.position.x) * -speedWhileAttacking * Time.deltaTime, 0f));
 		}

@@ -16,6 +16,7 @@ public class CustomMenu : Editor {
 
 		GameObject player = GameObject.FindGameObjectWithTag("Player");
 		GameObject playerGraphics = GameObject.FindGameObjectWithTag("PlayerGraphics");
+		GameObject playerHitbox = GameObject.FindGameObjectWithTag("PlayerHitbox");
 		TouchManager touchManager = GameObject.FindGameObjectWithTag("TouchManager").GetComponent<TouchManager>();
 
 		TextBoxPool tbp = null;
@@ -35,7 +36,6 @@ public class CustomMenu : Editor {
 		BodypartButton[] orderedButtons = new BodypartButton[4];
 		foreach(BodypartButton bb in buttons)
 		{
-			Debug.Log(bb.slotNumber);
 			orderedButtons[bb.slotNumber] = bb;
 		}
 
@@ -66,27 +66,38 @@ public class CustomMenu : Editor {
 			{
 				Bodypart bp = go.GetComponent<Bodypart>();
 				bp.playerScript = player.GetComponent<PlatformingInputHandler>();
-				bp.playerBattleStats = player.GetComponent<AttackableObject>();
-				string tagToCheck = "";
+				bp.playerBattleStats = playerHitbox.GetComponent<AttackableObject>();
+				string graphicsTagToCheck = "";
 				switch (bp.slotNumber)
 				{
 					case 0:
-						tagToCheck = "PlayerGraphics_Blue";
+						graphicsTagToCheck = "PlayerGraphics_Blue";
 						break;
 					case 1:
-						tagToCheck = "PlayerGraphics_Green";
+						graphicsTagToCheck = "PlayerGraphics_Green";
 						break;
 					case 2:
-						tagToCheck = "PlayerGraphics_Yellow";
+						graphicsTagToCheck = "PlayerGraphics_Yellow";
 						break;
 					case 3:
-						tagToCheck = "PlayerGraphics_Red";
+						graphicsTagToCheck = "PlayerGraphics_Red";
 						break;
                 }
 
-				GameObject graphics = GameObject.FindGameObjectWithTag(tagToCheck);
-				bp.playerGraphics = graphics.GetComponent<SpriteRenderer>();
-				bp.playerAnimator = graphics.GetComponent<Animator>();
+				GameObject graphicsFront = GameObject.FindGameObjectWithTag(graphicsTagToCheck);
+				bp.playerGraphicsFront = graphicsFront.GetComponent<SpriteRenderer>();
+				bp.playerAnimatorFront = graphicsFront.GetComponent<Animator>();
+
+				GameObject graphicsBehind = GameObject.FindGameObjectWithTag(graphicsTagToCheck + "_Behind");
+				bp.playerGraphicsBehind = graphicsBehind.GetComponent<SpriteRenderer>();
+				bp.playerAnimatorBehind = graphicsBehind.GetComponent<Animator>();
+
+				bp.playerBulletEmitters = new BulletEmitter[4];
+				bp.playerBulletEmitters[0] = GameObject.FindGameObjectWithTag("Emitter_Blue").GetComponent<BulletEmitter>();
+				bp.playerBulletEmitters[1] = GameObject.FindGameObjectWithTag("Emitter_Green").GetComponent<BulletEmitter>();
+				bp.playerBulletEmitters[2] = GameObject.FindGameObjectWithTag("Emitter_Yellow").GetComponent<BulletEmitter>();
+				bp.playerBulletEmitters[3] = GameObject.FindGameObjectWithTag("Emitter_Red").GetComponent<BulletEmitter>();
+
 				EditorUtility.SetDirty(bp);
 			}
 
@@ -95,6 +106,49 @@ public class CustomMenu : Editor {
 				ComportementEnnemis ce = go.GetComponent<ComportementEnnemis>();
 				ce.player = player.transform;
 				EditorUtility.SetDirty(ce);
+			}
+
+			if(go.GetComponent<Bullet>())
+			{
+				Bullet bullet = go.GetComponent<Bullet>();
+				bullet.VFXPool = GameObject.FindGameObjectWithTag("ParticlePool").GetComponent<ParticlePool>();
+				bullet.LLScreenCorner = GameObject.FindGameObjectWithTag("BottomLeftOfCamera").transform;
+				bullet.URScreenCorner = GameObject.FindGameObjectWithTag("TopRightOfCamera").transform;
+				EditorUtility.SetDirty(bullet);
+			}
+
+			if(go.GetComponent<BulletEmitter>())
+			{
+				BulletEmitter be = go.GetComponent<BulletEmitter>();
+				be.bulletGraphics = new SpriteRenderer[be.bullets.Length];
+				be.bulletHitboxes = new CircleCollider2D[be.bullets.Length];
+				for(int i=0; i<be.bullets.Length; i++)
+				{
+					be.bulletGraphics[i] = be.bullets[i].graphics;
+					be.bulletHitboxes[i] = be.bullets[i].GetComponent<CircleCollider2D>();
+				}
+				EditorUtility.SetDirty(be);
+			}
+
+			if(go.GetComponent<AttackPattern>())
+			{
+				AttackPattern ap = go.GetComponent<AttackPattern>();
+				ap.player = player.transform;
+				EditorUtility.SetDirty(ap);
+			}
+
+			if(go.GetComponent<MonsterDeathManager>())
+			{
+				MonsterDeathManager mdm = go.GetComponent<MonsterDeathManager>();
+				mdm.deathVFXPool = GameObject.FindGameObjectWithTag("ParticlePool_EnemyDeath").GetComponent<ParticlePool>();
+				EditorUtility.SetDirty(mdm);
+			}
+
+			if(go.GetComponent<AttackableObject>())
+			{
+				AttackableObject ao = go.GetComponent<AttackableObject>();
+				ao.player = player.GetComponentInChildren<AttackableObject>();
+				EditorUtility.SetDirty(ao);
 			}
 		}
 

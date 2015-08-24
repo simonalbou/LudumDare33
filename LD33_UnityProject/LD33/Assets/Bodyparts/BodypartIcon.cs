@@ -25,7 +25,7 @@ public class BodypartIcon : MonoBehaviour {
 
 	public void Awake()
 	{
-		selfImage.sprite = bodyPart.icon;
+		if(bodyPart) selfImage.sprite = bodyPart.icon;
 	}
 
 	public void Start()
