@@ -71,6 +71,7 @@
      <Compile Include="Assets\Physics\Scripts\PlatformingInputHandler.cs" />
      <Compile Include="Assets\Physics\Scripts\Raycaster.cs" />
      <Compile Include="Assets\UI\Joystick\VirtualJoystick.cs" />
+     <Compile Include="Assets\UI\Menu\MenuButtonEffect.cs" />
      <Compile Include="Assets\UI\TextBoxes\TextBox.cs" />
      <Compile Include="Assets\UI\TextBoxes\TextBoxPool.cs" />
  <Reference Include="UnityEngine.UI">
