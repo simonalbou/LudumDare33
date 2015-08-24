@@ -21,6 +21,9 @@ public class Bullet : MonoBehaviour
 
 	public bool dontDestroyWhenCollided;
 
+	[HideInInspector]
+	public bool isMirrored = false;
+
 	#endregion
 
 	#region references
@@ -44,7 +47,8 @@ public class Bullet : MonoBehaviour
 	{
 		timeSinceSpawned += Time.deltaTime;
 		self.Translate(Vector3.up * speed * (lifeSpan == 0 ? 1 : speedMod.Evaluate(timeSinceSpawned / lifeSpan)) * Time.deltaTime, Space.Self);
-		self.Rotate(Vector3.forward * rotateSpeed * (lifeSpan == 0 ? 1 : rotateSpeedMod.Evaluate(timeSinceSpawned / lifeSpan)) * Time.deltaTime);
+		float mirrorSign = isMirrored ? -1 : 1;
+		self.Rotate(Vector3.forward * mirrorSign * rotateSpeed * (lifeSpan == 0 ? 1 : rotateSpeedMod.Evaluate(timeSinceSpawned / lifeSpan)) * Time.deltaTime);
 
 		if (target) SlowlyLookAt(target.position);
 
@@ -66,8 +70,6 @@ public class Bullet : MonoBehaviour
 	{
 		float angle = Mathf.Atan2(dest.y-self.position.y, dest.x-self.position.x) * Mathf.Rad2Deg - 90.0f;
 		self.eulerAngles = Vector3.forward * angle;
-		
-		// PK SA MARCH PA
 	}
 
 	// Homing behaviour

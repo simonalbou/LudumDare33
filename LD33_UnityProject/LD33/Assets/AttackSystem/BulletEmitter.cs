@@ -46,7 +46,7 @@ public class BulletEmitter : MonoBehaviour {
 
 	// Ready a new bullet and shoot it, given an orientation, a start position, and the parenting.
 	// Default settings : SimpleShoot() fires a bullet in the same direction the emitter looks to, from its position.
-	public void SimpleShoot(float startRotation=0, Vector3 startPosition=default(Vector3), bool isChild=false)
+	public void SimpleShoot(float startRotation=0, bool mirror=false, Vector3 startPosition=default(Vector3), bool isChild=false)
 	{
 		if (mustBeActiveToShoot && !selfBullet.enabled) return;
 		if (!canShoot) return;
@@ -58,6 +58,14 @@ public class BulletEmitter : MonoBehaviour {
 			return;
 		}
 
+		if (mirror)
+		{
+			temp.isMirrored = true;
+			startPosition.x *= -1;
+			startRotation *= -1;
+		}
+		else temp.isMirrored = false;
+
 		temp.self.position = self.position + startPosition;
 		temp.self.eulerAngles = Vector3.forward * (self.eulerAngles.z+startRotation);
 		if (isChild) temp.self.parent = self;
@@ -67,14 +75,14 @@ public class BulletEmitter : MonoBehaviour {
 	}
 	
 	// Ready a new bullet and shoot it towards something. Start position and parenting are also given.
-	public void ShootTowards(Vector3 destination, Vector3 startPosition = default(Vector3), bool isChild = false)
+	public void ShootTowards(Vector3 destination, bool mirror = false, Vector3 startPosition = default(Vector3), bool isChild = false)
 	{
         if (!canShoot) return;
         if (mustBeActiveToShoot && !selfBullet.enabled) return;
 
 		selfBullet.LookAt(destination);
 
-		SimpleShoot(0, startPosition, isChild);
+		SimpleShoot(0, mirror, startPosition, isChild);
 	}
 
 	// Returns the first available bullet in the library array.

@@ -18,6 +18,7 @@ public class PlatformingInputHandler : MonoBehaviour
 		[Header("References")]
 		public Transform self;
 		public Transform graphics;
+		public Transform bulletPools;
 		public Animator anim; // not used here because it's a simple example script. But it could be !
 		public VirtualJoystick virtualJoystick;
 	#endregion
@@ -54,7 +55,8 @@ public class PlatformingInputHandler : MonoBehaviour
 	#endregion
 
 	#region Animation-related
-		private bool facesRight; // we won't do anything here but flip the character to make it face left or right.
+		public bool facesRight;
+		// we won't do anything here but flip the character to make it face left or right.
 		// Add anything related to an Animator component here.
 	#endregion
 
@@ -267,11 +269,13 @@ public class PlatformingInputHandler : MonoBehaviour
 	// Everything related to graphics goes here.
 	void UpdateAnimation()
 	{
-		return;
-		/**
+		/**/
 		if(horizontalAxis == 0) return;
 		float sign = Mathf.Sign(horizontalAxis);
+		facesRight = sign > 0;
+		//self.eulerAngles = Vector3.up * (90 - 90 * sign);
 		graphics.localScale = new Vector3(Mathf.Abs(graphics.localScale.x)*sign, graphics.localScale.y, graphics.localScale.z);
+		bulletPools.eulerAngles = Vector3.forward * (180 + 90 * sign);
 		//*/
 	}
 	

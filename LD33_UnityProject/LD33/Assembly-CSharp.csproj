@@ -54,6 +54,7 @@
      <Compile Include="Assets\Bodyparts\Bodypart.cs" />
      <Compile Include="Assets\Bodyparts\BodypartButton.cs" />
      <Compile Include="Assets\Bodyparts\BodypartIcon.cs" />
+     <Compile Include="Assets\Bodyparts\Bodyparts_Database\1_BlueSlot\HumanHead.cs" />
      <Compile Include="Assets\Bodyparts\SpecialAttack.cs" />
      <Compile Include="Assets\Bodyparts\SpecialAttack_Template.cs" />
      <Compile Include="Assets\Environnements\Psy\Scripts\Background.cs" />
