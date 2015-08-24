@@ -16,6 +16,7 @@ public class AttackableObject : MonoBehaviour {
 	public Transform lifeBar;
 	public SpriteRenderer lifeBarSprite;
 	public MonsterDeathManager deathManager;
+	public AttackableObject player;
 
 	// Who can shoot at this ?
 	[Header("Collision Things")]
@@ -96,7 +97,12 @@ public class AttackableObject : MonoBehaviour {
 
 			if (destroyBullet && !bullet.dontDestroyWhenCollided) bullet.Die();
 			if (bullet.dontDestroyWhenCollided) MakeInvincible(0.5f);
-			if (OnHitByBullet != null) OnHitByBullet.Invoke(bullet.power);
+
+			if (OnHitByBullet != null)
+			{
+				float atkBonus = deathManager != null ? player.atkMultiplier : 1;
+				OnHitByBullet.Invoke(bullet.power * atkBonus);
+			}
 		}
 		else
 		{

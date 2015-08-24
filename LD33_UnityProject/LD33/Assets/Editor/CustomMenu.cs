@@ -143,6 +143,13 @@ public class CustomMenu : Editor {
 				mdm.deathVFXPool = GameObject.FindGameObjectWithTag("ParticlePool_EnemyDeath").GetComponent<ParticlePool>();
 				EditorUtility.SetDirty(mdm);
 			}
+
+			if(go.GetComponent<AttackableObject>())
+			{
+				AttackableObject ao = go.GetComponent<AttackableObject>();
+				ao.player = player.GetComponentInChildren<AttackableObject>();
+				EditorUtility.SetDirty(ao);
+			}
 		}
 
 		touchManager.allIcons = allIconsAsList.ToArray();
